@@ -1,0 +1,11 @@
+# Generated data files (large)
+*.json
+*.ndjson
+
+# Private planning notes
+private/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
