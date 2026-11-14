@@ -1,0 +1,1 @@
+# measures memory with fields removed, so will need to load the file, record current memory, delete columns from every node, then record current memory again. It would delete joinCondition from every node, then records again. What is left is the light part of each node, id, name, nodeType, dependencies. Record the results. 

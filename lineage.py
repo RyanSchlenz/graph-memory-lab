@@ -1,0 +1,1 @@
+# Prove the light version still does real work
