@@ -5,22 +5,21 @@
 # columns and joinCondition).
 # 1. Load only index.json, timing it and measuring memory the same way as
 #    naive.py (tracemalloc started before the timer, MB = 1,000,000 bytes).
-#    Compare to step 2: 0.83 s load, 170 MB current, 232 MB peak.
 # 2. get_payload(node_id): look up the node's offset and length in the index,
 #    open payloads.ndjson in "rb" mode, jump to the offset, read that many
 #    bytes, and return them as a dict.
 # 3. Time get_payload twice on the same node.
-# 4. Test: for a few ids, get_payload(id) must exactly match that node's
-#    columns and joinCondition in graph.json.
+# 4. Time fetching every node's payload, then check every payload against
+#    graph.json: all 10,000 must match exactly.
 
 import json
 import time
 import tracemalloc
 
-# start tracking memory 
+# start tracking memory
 tracemalloc.start()
 
-# start the timer 
+# start the timer
 start = time.perf_counter()
 
 # open index.json and parse it into a list called index
@@ -30,7 +29,7 @@ with open("index.json") as f:
 # stop the timer
 elapsed = time.perf_counter() - start
 
-# read current and peak memory 
+# read current and peak memory
 current, peak = tracemalloc.get_traced_memory()
 
 # print the time and both memory numbers
@@ -51,16 +50,16 @@ def get_payload(node_id):
     # return the dict
     return payload
 
-# try it: print the keys of get_payload(0)
-print(get_payload(0).keys())
+# sanity check: node 0's payload should have columns and joinCondition
+print("payload keys:", list(get_payload(0).keys()))
 
 # stop tracking memory with tracemalloc.stop(), since part 1 is done measuring and it slows timing down
 tracemalloc.stop()
 
-# pick a node id to test, e.g. 5000
+# pick a node id to test (not 0, which the try-it line already fetched)
 node_id = 9000
 
-# start the timer 
+# start the timer
 start = time.perf_counter()
 
 # call get_payload on that node

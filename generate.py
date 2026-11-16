@@ -190,7 +190,7 @@ def main() -> None:
         json.dump(nodes, f)
 
     size_bytes = os.path.getsize(OUTPUT_FILE)
-    size_mb = size_bytes / (1024 * 1024)  # 1 MB = 1,048,576 bytes here
+    size_mb = size_bytes / 1_000_000  # 1 MB = 1,000,000 bytes, same as the other scripts
     print(f"Wrote {len(nodes):,} nodes to {OUTPUT_FILE}")
     print(f"File size: {size_mb:.1f} MB ({size_bytes:,} bytes)")
 
